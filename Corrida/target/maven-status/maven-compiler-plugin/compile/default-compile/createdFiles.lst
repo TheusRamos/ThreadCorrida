@@ -1,0 +1,5 @@
+com\mycompany\corrida\Interfaces\IsRunner.class
+com\mycompany\corrida\Class\Carro.class
+com\mycompany\corrida\Class\Podio.class
+com\mycompany\corrida\Class\Factory.class
+com\mycompany\corrida\Corrida.class
