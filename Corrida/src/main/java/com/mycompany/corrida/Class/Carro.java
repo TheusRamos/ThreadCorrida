@@ -18,6 +18,7 @@ public class Carro implements IsRunner, Runnable {
     private final Podio podio;
     private final CountDownLatch latch;
     
+    private long tempo = 3000 + (int) Math.random() * 250;
     private boolean pitstop = false;
 
     public Carro(String nome, double distanciaTotalCorrida, Podio podio, CountDownLatch latch) {
@@ -27,29 +28,30 @@ public class Carro implements IsRunner, Runnable {
         this.latch = latch;
         this.inicioCorrida = System.currentTimeMillis();
     }
-        
+
     @Override
     public void run() {
         try {
             while (distanciaPercorrida < distanciaTotalCorrida) {
 
                 if (podio.getResultadosPodio().size() >= 3) {
-                    System.out.println(this.nome + " PAROU. A corrida já tem 3 vencedores.");
                     return;
                 }
 
-                if(distanciaPercorrida >= distanciaTotalCorrida / 2 && pitstop == false){
+                if (distanciaPercorrida >= distanciaTotalCorrida / 2 && pitstop == false) {
+                    
                     System.out.println("O carro " + this.nome + " entrou no PitStop.");
-                    Thread.currentThread().sleep(3000);
+                    Thread.currentThread().sleep((tempo));
+                    
+                    System.out.println("Tempo de PitStop do carro" + this.nome + " foi de " + tempo);
                     this.pitstop = true;
-                   
-                } 
-                
-                
-                distanciaPercorrida += (int) (Math.random() * 6);
-                Thread.sleep((long) (Math.random() * 100)); 
 
-                System.out.println(this.nome + ": " + String.format("%.0f", distanciaPercorrida) + "m");
+                }
+
+                distanciaPercorrida += (int) (Math.random() * 6);
+                Thread.sleep((long) (Math.random() * 100));
+                long tempoFinal = System.currentTimeMillis() - this.inicioCorrida;
+                System.out.println(this.nome + ": " + String.format("%.0f", distanciaPercorrida) + "m" + " com um tempo de " +String.format("%.3f", tempoFinal/1000.0) + " segundos");
 
             }
 
